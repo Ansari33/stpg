@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('status_asn');
             $table->string('penempatan');
             $table->string('unit_kerja');
+            $table->bigInteger('tunjangan');
             $table->timestamps();
         });
 

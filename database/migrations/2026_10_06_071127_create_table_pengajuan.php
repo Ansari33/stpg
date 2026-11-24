@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nip');
             $table->integer('bulan');
             $table->integer('tahun');
+            $table->string('nomor');
             $table->date('tanggal_pengajuan');
             $table->timestamps();
         });
