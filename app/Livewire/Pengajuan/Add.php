@@ -3,7 +3,7 @@
 namespace App\Livewire\Pengajuan;
 
 use App\Models\JenisCuti;
-use App\Models\Pegawai;
+use App\Models\Guru;
 use App\Models\Pengajuan;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
@@ -11,189 +11,78 @@ use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 class Add extends Component
 {
     public $pengaju;
-    public $jenis;
-    public $jumlah;
-    public $tanggal_pengajuan;
-    public $tanggal_mulai;
-    public $tanggal_berakhir;
-    public $alasan;
-    public $tahun ;
-    public $dokumen ='-';
-    public $surat ='-';
-    public $disabled = 0;
-    public $info;
-    public $sisaCutiTahunIni;
-    public $sisaCutiTahunLalu;
-    public $maxCuti;
-
-
+    public $bulan;
+    public $tahun;
+    public $disabled = false;
+    public $manual;
+    public $ismanual = true;
     public function render()
     {
-       $pegawai = Pegawai::get(['nama','id','nip']);
-       # $cutis = JenisCuti::get(['jenis','id']);
-       $cutis = [
-        [
-            'jenis' => 'Cuti Tahunan',
-            'id'    => 'Cuti Tahunan',
-            'batas' => 12
-        ],
-        [
-            'jenis' => 'Cuti Besar',
-            'id'    => 'Cuti Besar',
-            'batas' => 90
-        ],
-        [
-            'jenis' => 'Cuti Sakit',
-            'id'    => 'Cuti Sakit',
-            'batas' => 14
-        ],
-        [
-            'jenis' => 'Cuti Melahirkan',
-            'id'    => 'Cuti Melahirkan',
-            'batas' => 90
-        ],
-        [
-            'jenis' => 'Cuti Alasan Penting',
-            'id'    => 'Cuti Alasan Penting',
-            'batas' => 30
-        ],
-        [
-            'jenis' => 'Cuti Bersama',
-            'id'    => 'Cuti Bersama',
-            'batas' => 0
-        ],
-        [
-            'jenis' => 'Cuti Diluar Tanggungan Negara',
-            'id'    => 'Cuti Diluar Tanggungan Negara',
-            'batas' => 0
-        ],
-       ];
-       $this->tahun = intval(date("Y"));
-        return view('livewire.pengajuan.add',compact('pegawai','cutis'));
-    }
-
-    public function cekJenisCuti(){
-        $sisaCuti = 0;
-        if($this->jenis == 'Cuti Tahunan'){
-            
-           $sisaCuti = $this->hitungSisaCutiTahunan();
-           if($sisaCuti <= 0 ){
-                $this->disabled = 1;
-           }
-
-           $this->info = ' Sisa Cuti Tersedia : '.$sisaCuti.' Sisa Tahunan  '
-           .'Total Cuti Tahun Ini : '.$this->cekCutiTahunIni().' '
-            .($this->tahun) -1 .' : '.$this->sisaCutiTahunLalu
-            // .' Dipakai : '.$this->cutiTahunLalu
-            . ' Sisa Cuti Tahunan '.date('Y').' : '. $this->sisaCutiTahunIni;
-
-        }
-    }
-
-    public function hitungSisaCutiTahunan(){
-        $sisaCuti = 0;
-        $tahunLalu = ($this->tahun)-1;
-        
-        if($this->cekCutiDuaTahun() == 24){
-            return $sisaCuti;
-        }
-    
-        $cutiTahunIni = $this->cekCutiTahunIni();
-        
-        $sisaCutiTahunIni = 12 - $cutiTahunIni <= 0 ? 0 : 12 - $cutiTahunIni;
-        $this->sisaCutiTahunIni = $sisaCutiTahunIni;
-        $sisaCuti += $sisaCutiTahunIni;
-        
-        $sisaCutiTahunLalu = 0;
-        $cutiTahunLalu = $this->cekCutiTahunLalu();
-
-        if($cutiTahunLalu < 12){
-            $sisaCutiTahunLalu = (12 - $cutiTahunLalu) >=6 ? 6 : 12 - $cutiTahunLalu;
-            $maksimalCuti = 12 + $sisaCutiTahunLalu;
-            $sisaCuti = $maksimalCuti - ($this->cekCutiTahunIni());
-        }
-        $this->maxCuti = $sisaCuti;
-        return $sisaCuti;
-
-    }
-
-    public function cekCutiTahunLalu(){
-        $tahunLalu = ($this->tahun) -1;
-        $pengaju = auth()->user()->hasRole('admin') ?
-        $this->pengaju:
-        auth()->user()->nip;
-        return Pengajuan::where('nip',$pengaju)
-        ->where('tahun',$tahunLalu)
-        ->where('jenis_cuti', $this->jenis)
-        ->where('status','Disetujui')
-        ->sum('lama_cuti');
-    }
-
-    public function cekCutiTahunIni(){
-        $pengaju = auth()->user()->hasRole('admin') ?
-        $this->pengaju:
-        auth()->user()->nip;
-        return Pengajuan::where('nip',$pengaju)
-        ->where('tahun',date("Y"))
-        ->where('jenis_cuti', $this->jenis)
-        ->where('status','Disetujui')
-        ->sum('lama_cuti');
-    }
-
-    public function cekCutiDuaTahun(){
-        $tahunLalu = ($this->tahun) -1;
-        $pengaju = auth()->user()->hasRole('admin') ?
-        $this->pengaju:
-        auth()->user()->nip;
-        return Pengajuan::where('nip',$pengaju)
-        ->whereIn('tahun',[$tahunLalu,date("Y")])
-        ->where('jenis_cuti', $this->jenis)
-        ->where('status','Disetujui')
-        ->sum('lama_cuti');
+       $guru = Guru::get(['nip','nama']);
+         $this->bulan = intval(date('m')) - 1 ;
+         $this->tahun = date('Y');
+        return view('livewire.pengajuan.add',compact('guru'));
     }
 
     public function submit(){
-        $pegawai = auth()->user()->hasRole('admin') ? 
-        Pegawai::where('nip', $this->pengaju)->first() : 
-        Pegawai::where('nip', auth()->user()->nip)->first();
 
-        if($this->cekSisaCuti($this->jenis)){
+    $kode = '/KW/423212/'.date('Y');
+    $nomor = $this->ismanual ?  
+        strlen($this->manual) > 1 ? '00'.$this->manual.$kode :
+         '000'.$this->manual.$kode
+    :$this->getNomor();
+    
+        try {
+            if($this->cekPengajuan() > 0){
+                LivewireAlert::title('Pengajuan Sudah Ada!')
+                ->warning()
+                ->show();
+                return ;
+            }
             Pengajuan::create([
-                'nama'                  => $pegawai->nama,
-                'nip'                   => $pegawai->nip,
-                'pangkat_golongan'      => $pegawai->pangkat_gol,
-                'jabatan'               => $pegawai->jabatan,
-                'unit_kerja'            => $pegawai->unit_kerja,
-                'jenis_cuti'            => $this->jenis,
-                'lama_cuti'             => $this->jumlah,
-                'tanggal_pengajuan'     => $this->tanggal_pengajuan,
-                'tanggal_mulai'         => $this->tanggal_mulai,
-                'tanggal_berakhir'      => $this->tanggal_berakhir,
-                'alasan'                => $this->alasan,
-                'tahun'                 => $this->tahun == null || $this->tahun == 0 ? intval(date("Y")) : $this->tahun ,
-                'dokumen'               => $this->dokumen,
-                'surat'                 => $this->surat,
-                'status'                => 'Pengajuan' 
+                'nip'         => $this->pengaju,
+                'nomor'      => $nomor,
+                'bulan'      => $this->bulan,
+                'tahun'      => $this->tahun,
             ]);
             LivewireAlert::title('Pengajuan Berhasil Ditambahkan!')
-                    ->success()
-                    ->show();
-            //session()->flash('success','Data Pegawai Berhasil Ditambah!');
-            return $this->redirect('/cuti/pengajuan',navigate:true);
-        }
-        LivewireAlert::title('Jumlah Pengajuan Cuti Lebih Dari Sisa Cuti!')
+            ->success()
+            ->show();
+            return $this->redirect('/pengajuan',navigate:true);
+
+        } catch (\Exception $e) {
+            LivewireAlert::title($e->getMessage())
                 ->warning()
-                ->show(); 
+                ->show();
                 return ;
+        }
+           
     }
 
-    public function cekSisaCuti($jenis){
-        if($this->jenis === 'Cuti Tahunan'){
-            if ($this->jumlah > $this->maxCuti) {
-                        return false;
-                    }
-        }
-        
-        return true;
+    public function getNomor(){
+        $nomor = '';
+       $count = Pengajuan::where('tahun', $this->tahun)->count();
+        if ($count == 0) {
+            $nomor = '0001';
+        } else {
+            $nomor = strlen($count + 1) > 1 ? '00'.$count + 1 : '000'.$count + 1;
+        }    
+
+        return $nomor."/KW/423212/".date('Y');
     }
+
+    public function cekPengajuan(){
+       return Pengajuan::where('bulan', $this->bulan)
+            ->where('tahun', $this->tahun)
+            ->where('nip', $this->pengaju)
+            ->count();
+
+    }
+
+    public function setManual(){
+        LivewireAlert::title('Pengajuan Berhasil Ditambahkan!')
+            ->success()
+            ->show();
+    }
+
 }

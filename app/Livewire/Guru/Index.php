@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Livewire\Pegawai;
+namespace App\Livewire\Guru;
 
 use Livewire\Component;
-use App\Models\Pegawai;
+use App\Models\Guru;
 use Livewire\WithPagination;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
@@ -14,8 +14,8 @@ class Index extends Component
 
     public function render()
     {
-        $data = Pegawai::where('nama','like','%'.$this->search.'%')->paginate(15);
-        return view('livewire.pegawai.index',['data' => $data]);
+        $data = Guru::where('nama','like','%'.$this->search.'%')->paginate(15);
+        return view('livewire.guru.index',['data' => $data]);
     }
 
     public function searchData(){

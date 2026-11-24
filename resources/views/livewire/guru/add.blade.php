@@ -1,7 +1,7 @@
 @section('title', __('Permintaan Baru'))
 <div>
     <div class="card mb-1">
-        <h5 class="card-header">Tambah Data Pegawai</h5>
+        <h5 class="card-header">Tambah Data Guru</h5>
     </div>
     <div class="card p-4">  
       <form wire:submit.prevent="submit">
@@ -19,21 +19,28 @@
           </div>
         </div>
         <div class="mb-4 row">
-          <label for="html5-email-input" class="col-md-2 col-form-label">Pangkat</label>
+          <label for="html5-email-input" class="col-md-2 col-form-label">Jenis Guru</label>
           <div class="col-md-10">
-            <input name="pangkat_gol" wire:model="pangkat" class="form-control" type="text" value="" id="html5-email-input" />
+            <input name="jenis" wire:model="jenis" class="form-control" type="text" value="" id="html5-email-input" />
           </div>
         </div>
         <div class="mb-4 row">
-          <label for="html5-url-input" class="col-md-2 col-form-label">Jabatan</label>
+          <label for="html5-url-input" class="col-md-2 col-form-label">Status ASN</label>
           <div class="col-md-10">
-            <input name="jabatan" wire:model="jabatan" class="form-control" type="text" value=""  />
+            <input name="status" wire:model="status_asn" class="form-control" type="text" value=""  />
+          </div>
+        </div>
+
+        <div class="mb-4 row">
+          <label for="html5-url-input" class="col-md-2 col-form-label">Penempatan</label>
+          <div class="col-md-10">
+            <input name="penempatan" wire:model="penempatan" class="form-control" type="text" value=""  />
           </div>
         </div>
         <div class="mb-4 row">
-          <label for="html5-tel-input" class="col-md-2 col-form-label">Unit Kerja</label>
+          <label for="html5-tel-input" class="col-md-2 col-form-label">Tunjangan</label>
           <div class="col-md-10">
-            <input name="unit_kerja" wire:model="unit_kerja" class="form-control" type="text" value="" id="html5-tel-input" />
+            <input name="unit_kerja" wire:model="tunjangan" class="form-control" type="number" value="" id="html5-tel-input" />
           </div>
         </div>
         

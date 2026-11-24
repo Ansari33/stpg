@@ -36,11 +36,11 @@
       <table class="table">
         <thead>
           <tr>
+            <th>Nomor</th>
             <th>Pengaju</th>
-            <th>Tanggal Pengajuan</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Berakhir</th>
-            <th>Status</th>
+            <th>Bulan</th>
+            <th>Tahun</th>
+            <th>Kwintasi</th>
             <th>Actions</th>
           </tr>
           
@@ -48,22 +48,19 @@
         <tbody class="table-border-bottom-0">
           @foreach($data as $perm => $p )
           <tr>
+            <td>{{ $p->nomor }}</td>
             <td>
               <i class="icon-base fab fa-angular text-danger me-4"></i>
-              <span class="fw-medium">{{ $p->nama }}</span>
+              <span class="fw-medium">{{ $p->guru->nama }}</span>
             </td>
-            <td>{{ $p->tanggal_pengajuan }}</td>
+            <td>{{ $p->bulan }}</td>
             <td>
-              {{ $p->tanggal_mulai }}
-            </td>
-            <td>
-              <span class="">{{ $p->tanggal_berakhir }}</span>
+              {{ $p->tahun }}
             </td>
             <td>
-              <span class=" @if($p->status == 'Disetujui') bg-success @elseif($p->status == 'Ditolak') bg-danger @else bg-warning @endif text-white px-2 py-1 rounded">
-                {{ $p->status }}
-              </span>
+              <span class=""> <a href="/pengajuan/kwitansi/{{ $p->id }}" target="_blank"><i class="icon-base bx bx-file"></i></a></span>
             </td>
+            
             <td>
               <div class="dropdown">
                 <button

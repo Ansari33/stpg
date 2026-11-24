@@ -18,10 +18,7 @@ class Index extends Component
 
     public function render()
     {
-        $data = auth()->user()->hasRole('admin') ?
-         Pengajuan::where('nama','like','%'.$this->search.'%')->paginate(15) :
-         Pengajuan::where('nip',auth()->user()->nip)->paginate(15)
-         ;
+        $data = Pengajuan::with('guru')->paginate(15);
 
         return view('livewire.pengajuan.index',['data' => $data]);
     }

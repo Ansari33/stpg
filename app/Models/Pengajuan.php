@@ -8,10 +8,10 @@ class Pengajuan extends Model
 {
     protected $guarded = [];
     //
-    //  public function pegawai()
-    // {
-    //     return $this->belongsTo(Pegawai::class,'id_pegawai','id');
-    // }
+     public function guru()
+    {
+        return $this->belongsTo(Guru::class,'nip','nip');
+    }
 
     // public function jenisCuti()
     // {

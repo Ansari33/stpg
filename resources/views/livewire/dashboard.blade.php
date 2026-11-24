@@ -13,13 +13,13 @@ new class extends Component {
     public function mount() 
     {
        $pengajuans = auth()->user()->hasRole('admin') ?
-        Pengajuan::select(['status'])->get() :
-        Pengajuan::select(['status','nip'])->where('nip',auth()->user()->nip)->get();
+       [] :# Pengajuan::select(['status'])->get() :
+        []; #Pengajuan::select(['status','nip'])->where('nip',auth()->user()->nip)->get();
        
-       $this->pengajuan = $pengajuans->where('status','Pengajuan')->count();
-       $this->diterima = $pengajuans->where('status','Disetujui')->count();
-       $this->ditolak = $pengajuans->where('status','Ditolak')->count();
-       $this->total = $pengajuans->count();
+       $this->pengajuan = 0; # $pengajuans->where('status','Pengajuan')->count();
+       $this->diterima = 0; # $pengajuans->where('status','Disetujui')->count();
+       $this->ditolak = 0; # $pengajuans->where('status','Ditolak')->count();
+       $this->total = 0; # $pengajuans->count();
 
     } 
 
