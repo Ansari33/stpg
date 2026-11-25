@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Livewire\Pegawai;
+namespace App\Livewire\Guru;
 
 use Livewire\Component;
-use App\Models\Pegawai;
+use App\Models\Guru;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\WithFileUploads;
 
@@ -13,38 +13,40 @@ class Edit extends Component
     public $data;
     public $nama;
     public $nip;
-    public $pangkat;
-    public $jabatan;
-    public $unit_kerja;
-    public $gambar;
+    public $jenis;
+    public $status_asn;
+    public $penempatan;
+    public $tunjangan;
 
     public function render()
     {
-        return view('livewire.pegawai.edit');
+        
+        return view('livewire.guru.edit');
     }
 
     public function mount($id){
-         $this->data = Pegawai::where('nip',$id)->first();
-         $this->nama = $this->data->nama;
-         $this->nip = $this->data->nip;
-         $this->pangkat = $this->data->pangkat_gol;
-         $this->jabatan = $this->data->jabatan;
-         $this->unit_kerja = $this->data->unit_kerja;
+         $this->data        = Guru::where('nip',$id)->first();
+         $this->nama        = $this->data->nama;
+         $this->nip         = $this->data->nip;
+         $this->jenis       = $this->data->jenis;
+         $this->status_asn  = $this->data->status_asn;
+         $this->penempatan  = $this->data->penempatan;
+         $this->tunjangan   = $this->data->tunjangan;
     }
 
     public function update(){
-        $pegawai = Pegawai::find($this->data->id);
-        $pegawai->nama = $this->nama;
-        $pegawai->nip = $this->nip;
-        $pegawai->pangkat_gol = $this->pangkat;
-        $pegawai->jabatan = $this->jabatan;
-        $pegawai->unit_kerja = $this->unit_kerja;
-        $pegawai->save();
+        $guru               = Guru::find($this->data->id);
+        $guru->nama         = $this->nama;
+        $guru->nip          = $this->nip;
+        $guru->jenis        = $this->jenis;
+        $guru->status_asn   = $this->status_asn;
+        $guru->penempatan   = $this->penempatan;
+        $guru->tunjangan    = $this->tunjangan;
+        $guru->save();
 
-        LivewireAlert::title('Pegawai Berhasil Diupdate!')
+        LivewireAlert::title('Guru Berhasil Diupdate!')
             ->success()
             ->show();
-        // session()->flash('success','Data Berhasil Diupdate!');
-        return $this->redirect('/dashboard',navigate:true);
+        return $this->redirect('/guru',navigate:true);
     }
 }

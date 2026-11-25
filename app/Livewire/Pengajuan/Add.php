@@ -16,6 +16,8 @@ class Add extends Component
     public $disabled = false;
     public $manual;
     public $ismanual = true;
+
+    
     public function render()
     {
        $guru = Guru::get(['nip','nama']);

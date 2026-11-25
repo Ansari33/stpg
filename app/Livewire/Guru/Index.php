@@ -25,7 +25,7 @@ class Index extends Component
 
     public function confirmDelete($nama)
     {
-        LivewireAlert::title('Hapus Pegawai ' . $nama . '?')
+        LivewireAlert::title('Hapus Guru ' . $nama . '?')
             ->question()
             ->withCancelButton('Batal')
             ->withConfirmButton('Hapus')
@@ -36,9 +36,7 @@ class Index extends Component
 
     public function delete($data)
     {
-        $pegawai = Pegawai::where('nama',$data['nama'])->first();
-        $pegawai->user()->delete();
-        $pegawai->delete();
+        $pegawai = Guru::where('nama',$data['nama'])->delete();
         LivewireAlert::title('Data Terhapus!')
             ->success()
             ->show();

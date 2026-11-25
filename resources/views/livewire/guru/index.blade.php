@@ -63,7 +63,8 @@
                 </button>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="/guru/edit/{{$p->nip}}" wire:navigate><i class="icon-base bx bx-edit-alt me-1"></i>Edit</a>
-                  <butt class="dropdown-item" wire:click="confirmDelete('{{ $p->nama }}')"><i class="icon-base bx bx-trash me-1"></i>Delete</button>
+                  <a class="dropdown-item" href="/guru/rekap/{{$p->nip}}" wire:navigate><i class="icon-base bx bx-bar-chart me-1"></i>Rekap Tahunan</a>
+                  <button class="dropdown-item" wire:click="confirmDelete('{{ $p->nama }}')"><i class="icon-base bx bx-trash me-1"></i>Delete</button>
                 </div>
               </div>
             </td>

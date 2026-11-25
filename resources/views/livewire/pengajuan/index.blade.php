@@ -70,7 +70,7 @@
                   <i class="icon-base bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/cuti/pengajuan/edit/{{$p->id}}" wire:navigate><i class="icon-base bx bx-edit-alt me-1"></i>Edit</a>
+                  <a class="dropdown-item" href="/pengajuan/edit/{{$p->id}}" wire:navigate><i class="icon-base bx bx-edit-alt me-1"></i>Edit</a>
                   <butt class="dropdown-item" wire:click="confirmDelete('{{ $p->id }}')"><i class="icon-base bx bx-trash me-1"></i>Delete</button>
                 </div>
               </div>

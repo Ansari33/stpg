@@ -37,7 +37,8 @@ Route::middleware(['auth', 'verified'])->prefix('guru')->group(function () {
     Volt::route('/', 'guru.index')->name('guru');
     Volt::route('add', 'guru.add')->name('guru.add');  
     Volt::route('edit/{id}', 'guru.edit')->name('guru.edit'); 
-    Route::get('/delete/{id}', [guruController::class, 'delete'])->name('guru.delete');
+    Volt::route('rekap/{id}', 'guru.rekap')->name('guru.rekap'); 
+    Route::get('/delete/{id}', [GuruController::class, 'delete'])->name('guru.delete');
     Volt::route('import', 'guru.import')->name('guru.import');      
 });
 

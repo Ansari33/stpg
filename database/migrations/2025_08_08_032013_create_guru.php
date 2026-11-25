@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('status_asn');
             $table->string('penempatan');
-            $table->string('unit_kerja');
+            $table->string('jenis');
             $table->bigInteger('tunjangan');
             $table->timestamps();
         });
